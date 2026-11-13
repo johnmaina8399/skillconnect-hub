@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | SkillConnect Hub</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <nav class="navbar">
+        <h2>SkillConnect <span>Hub</span></h2>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="skills.html">Explore Skills</a>
+            <a href="services.html">Services</a>
+            <a href="contact.html">Contact</a>
+            <a href="login.html">Login</a>
+        </div>
+    </nav>
+</header>
+
+<section class="form-container">
+    <h1>Create Your Account</h1>
+    <p>Join SkillConnect Hub today.</p>
+
+    <form>
+        <label>Full Name</label>
+        <input type="text" placeholder="Enter your full name" required>
+
+        <label>Email Address</label>
+        <input type="email" placeholder="Enter your email" required>
+
+        <label>Phone Number</label>
+        <input type="tel" placeholder="Enter phone number" required>
+
+        <label>Choose Your Role</label>
+        <select required>
+            <option value="">Select role</option>
+            <option>Skill Provider</option>
+            <option>Customer</option>
+        </select>
+
+        <label>Password</label>
+        <input type="password" placeholder="Create password" required>
+
+        <button type="submit" class="btn">Register</button>
+    </form>
+
+    <p>Already registered? <a href="login.html">Login here</a></p>
+</section>
+
+<footer>
+    <p>© 2026 SkillConnect Hub. All Rights Reserved.</p>
+</footer>
+
+</body>
+<script>
+async function registerUser(){
+  const data = {
+    full_name: document.getElementById("fullname").value,
+    email: document.getElementById("email").value,
+    password: document.getElementById("password").value,
+    phone: document.getElementById("phone").value,
+    role: document.getElementById("role").value
+  };
+
+  try {
+    const res = await fetch("http://localhost:3000/api/register",{
+      method:"POST",
+      headers:{"Content‑Type":"application/json"},
+      body:JSON.stringify(data)
+    })
+    const result = await res.json();
+    console.log(result);
+    alert(result.success ? "Registration successful! Redirecting to login page." : "Error: " + result.error);
+    if(result.success){
+      window.location.href="login.html";
+    }
+  } catch(err){
+    alert("Failed to connect to server. Make sure backend (port 3000) is running.");
+    console.log(err);
+  }
+}
+</script>
+</html>
